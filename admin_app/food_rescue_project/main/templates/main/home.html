@@ -1,0 +1,64 @@
+{% extends 'shared/base.html' %}
+{% block title %}Home | Food Rescue{% endblock %}
+{% block content %}
+<section class="hero-section">
+    <div class="container">
+        <div class="hero-wrap">
+            <span class="hero-badge">Food Donation System</span>
+            <h1 class="hero-title">Rescue food.<br>Share care.</h1>
+            <p class="hero-text">A simple minimal platform to donate extra food for people and animals without clutter.</p>
+            <div class="hero-buttons">
+                {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" class="btn-dark">Go to Dashboard</a>
+                {% else %}
+                <a href="{% url 'login' %}" class="btn-dark">Login</a>
+                {% endif %}
+                <a href="{% url 'about' %}" class="btn-light">Learn More</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cards-section">
+    <div class="container two-col-grid">
+        <div class="info-card large-card">
+            <h3>Human Food</h3>
+            <p>Separate pages for veg and non-veg food donations with spacious item cards.</p>
+            <a href="{% url 'human_food' %}" class="card-link">Open Human Food</a>
+        </div>
+        <div class="info-card large-card">
+            <h3>Animal Food</h3>
+            <p>Dedicated section for animal food donations with clean listing layout.</p>
+            <a href="{% url 'animal_food' %}" class="card-link">Open Animal Food</a>
+        </div>
+    </div>
+</section>
+
+{% if latest_human or latest_animal %}
+<section class="preview-section">
+    <div class="container">
+        <h2 class="section-title">Latest Donations</h2>
+        <div class="items-grid">
+            {% for item in latest_human %}
+            <div class="item-card">
+                <span class="pill">Human {{ item.food_type|title }}</span>
+                <h4>{{ item.title }}</h4>
+                <p>{{ item.description|truncatechars:90 }}</p>
+                <div class="item-meta">Quantity: {{ item.quantity }}</div>
+                <div class="item-meta">Location: {{ item.location }}</div>
+            </div>
+            {% endfor %}
+            {% for item in latest_animal %}
+            <div class="item-card">
+                <span class="pill">Animal Food</span>
+                <h4>{{ item.title }}</h4>
+                <p>{{ item.description|truncatechars:90 }}</p>
+                <div class="item-meta">Quantity: {{ item.quantity }}</div>
+                <div class="item-meta">Location: {{ item.location }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

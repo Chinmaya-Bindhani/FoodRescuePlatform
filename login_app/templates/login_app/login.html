@@ -1,0 +1,23 @@
+{% extends 'home_app/base.html' %}
+{% block title %}Login | Food Rescue{% endblock %}
+{% block content %}
+<section class="form-section">
+    <div class="card form-card">
+        <h1>Login</h1>
+        <p class="muted">Use your registered donor account.</p>
+        {% if error %}<div class="message error">{{ error }}</div>{% endif %}
+        <form method="post" class="simple-form">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}<small class="error-text">{{ field.errors|striptags }}</small>{% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn full-btn">Login</button>
+        </form>
+        <p class="form-link">New donor? <a href="{% url 'register' %}">Register</a></p>
+    </div>
+</section>
+{% endblock %}

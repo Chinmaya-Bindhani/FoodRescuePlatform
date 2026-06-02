@@ -1,0 +1,23 @@
+{% extends 'shared/base.html' %}
+{% block title %}Add Donation | Food Rescue{% endblock %}
+{% block content %}
+<section class="page-section">
+    <div class="container">
+        <div class="form-box wide-form">
+            <h1>Add Donation Item</h1>
+            <p class="form-subtext">For animal category, food type automatically becomes animal.</p>
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group">
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}<small class="error-text">{{ field.errors|striptags }}</small>{% endif %}
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn-dark full-btn">Save Item</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

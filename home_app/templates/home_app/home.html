@@ -1,0 +1,143 @@
+{% extends 'home_app/base.html' %}
+{% block title %}Home | Food Rescue{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div>
+        <span class="badge">Food Donation System</span>
+        <h1>Rescue food. Share care.</h1>
+        <p>Donate extra food for people and animals with a simple minimal system.</p>
+        <div class="hero-actions">
+            <a href="{% url 'donate' %}" class="btn">Donate Food</a>
+        </div>
+    </div>
+</section>
+
+<section class="category-grid three-col">
+    <div class="card category-card">
+        <h3>Human Foods</h3>
+        <p>Fresh veg food donations for people.</p>
+        <a href="{% url 'human_food' %}" class="link-arrow">View</a>
+    </div>
+
+    <div class="card category-card">
+        <h3>Animal Food</h3>
+        <p>Food donations that can help street animals.</p>
+        <a href="{% url 'animal_food' %}" class="link-arrow">View</a>
+    </div>
+
+    <div class="card category-card">
+        <h3>DONATIONS</h3>
+        <p>Non-veg meals listed with available quantity.</p>
+        <a href="{% url 'admin_page' %}" class="link-arrow">View</a>
+    </div>
+</section>
+
+<section>
+    <div class="section-head">
+        <h2>Veg</h2>
+    </div>
+    <div class="list-grid">
+        {% for item in human_veg %}
+            <div class="card food-card">
+                <div class="food-card-top">
+                    <div class="food-card-left">
+                        <h3>{{ item.food_name }}</h3>
+                        <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+                        <p><strong>Location:</strong> {{ item.location }}</p>
+
+                        {% if request.session.donor_id %}
+                            <form method="post" action="{% url 'claim_food' item.id %}" class="claim-form">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-small">Claim</button>
+                            </form>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="btn-small">Login to Claim</a>
+                        {% endif %}
+                    </div>
+
+                    {% if item.image %}
+                    <div class="food-img-wrap">
+                        <img src="{{ item.image.url }}" alt="{{ item.food_name }}" class="food-img">
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% empty %}
+            <div class="card empty-card">No items available.</div>
+        {% endfor %}
+    </div>
+</section>
+
+<section>
+    <div class="section-head">
+        <h2>Non-Veg</h2>
+    </div>
+    <div class="list-grid">
+        {% for item in human_nonveg %}
+            <div class="card food-card">
+                <div class="food-card-top">
+                    <div class="food-card-left">
+                        <h3>{{ item.food_name }}</h3>
+                        <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+                        <p><strong>Location:</strong> {{ item.location }}</p>
+
+                        {% if request.session.donor_id %}
+                            <form method="post" action="{% url 'claim_food' item.id %}" class="claim-form">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-small">Claim</button>
+                            </form>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="btn-small">Login to Claim</a>
+                        {% endif %}
+                    </div>
+
+                    {% if item.image %}
+                    <div class="food-img-wrap">
+                        <img src="{{ item.image.url }}" alt="{{ item.food_name }}" class="food-img">
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% empty %}
+            <div class="card empty-card">No items available.</div>
+        {% endfor %}
+    </div>
+</section>
+
+<section>
+    <div class="section-head">
+        <h2>Animal Food</h2>
+    </div>
+    <div class="list-grid">
+        {% for item in animal_food %}
+            <div class="card food-card">
+                <div class="food-card-top">
+                    <div class="food-card-left">
+                        <h3>{{ item.food_name }}</h3>
+                        <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+                        <p><strong>Location:</strong> {{ item.location }}</p>
+
+                        {% if request.session.donor_id %}
+                            <form method="post" action="{% url 'claim_food' item.id %}" class="claim-form">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-small">Claim</button>
+                            </form>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="btn-small">Login to Claim</a>
+                        {% endif %}
+                    </div>
+
+                    {% if item.image %}
+                    <div class="food-img-wrap">
+                        <img src="{{ item.image.url }}" alt="{{ item.food_name }}" class="food-img">
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% empty %}
+            <div class="card empty-card">No items available.</div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'home_app/base.html' %}
+{% block title %}Animal Food | Food Rescue{% endblock %}
+{% block content %}
+<section>
+    <div class="section-head">
+        <h1>Animal Food</h1>
+        <p class="muted">Available food for animals.</p>
+    </div>
+    <div class="list-grid">
+        {% for item in animal_food %}
+            <div class="card food-card">
+                <h3>{{ item.food_name }}</h3>
+                <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+                <p><strong>Location:</strong> {{ item.location }}</p>
+                <a href="{% url 'claim_food' item.id %}" class="btn-small">Claim</a>
+            </div>
+        {% empty %}
+            <div class="card empty-card">No animal food available.</div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

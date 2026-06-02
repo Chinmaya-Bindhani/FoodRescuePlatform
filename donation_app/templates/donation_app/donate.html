@@ -1,0 +1,94 @@
+{% extends 'home_app/base.html' %}
+{% block title %}Donate | FoodRescue{% endblock %}
+
+{% block content %}
+<section class="form-section">
+    <div class="card form-card wide-form-card">
+        <h1>Donate Food</h1>
+        <p class="muted">Submit available food details.</p>
+
+        <form method="post" enctype="multipart/form-data" class="simple-form">
+            {% csrf_token %}
+
+            {% for field in form %}
+                {% if field.name != 'latitude' and field.name != 'longitude' %}
+                    <div class="form-group">
+                        <label>{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <small class="error-text">{{ field.errors|striptags }}</small>
+                        {% endif %}
+                    </div>
+
+                    {% if field.name == 'location' %}
+                        {{ form.latitude }}
+                        {{ form.longitude }}
+
+                        <div class="location-btn-row">
+                            <button type="button" class="btn-small" onclick="getCurrentAddress()">
+                                Use Current Location
+                            </button>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            <button type="submit" class="btn full-btn">Submit Donation</button>
+        </form>
+    </div>
+</section>
+
+<script>
+function getCurrentAddress() {
+    if (!navigator.geolocation) {
+        alert("Geolocation is not supported in your browser.");
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+        async function(position) {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            const accuracy = position.coords.accuracy;
+
+            document.getElementById("id_latitude").value = lat;
+            document.getElementById("id_longitude").value = lng;
+
+            try {
+                const response = await fetch(
+                    `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`
+                );
+
+                const data = await response.json();
+
+                const place =
+                    data.city ||
+                    data.locality ||
+                    data.principalSubdivision ||
+                    data.countryName ||
+                    "";
+
+                if (place.trim() !== "") {
+                    document.getElementById("id_location").value = place;
+                } else {
+                    document.getElementById("id_location").value = "Location not found";
+                }
+
+                console.log("Accuracy:", accuracy, "meters");
+                console.log("Resolved place:", place);
+            } catch (error) {
+                document.getElementById("id_location").value = "Location not found";
+            }
+        },
+        function(error) {
+            alert("Unable to get your location.");
+        },
+        {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 0
+        }
+    );
+}
+</script>
+{% endblock %}

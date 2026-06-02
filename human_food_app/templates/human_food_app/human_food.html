@@ -1,0 +1,42 @@
+{% extends 'home_app/base.html' %}
+{% block title %}Human Food | Food Rescue{% endblock %}
+{% block content %}
+<section>
+    <div class="section-head">
+        <h1>Human Food</h1>
+<!--        <p class="muted">veg donations.</p>-->
+    </div>
+</section>
+
+<section>
+    <div class="section-head"><h2>Veg</h2></div>
+    <div class="list-grid">
+        {% for item in human_veg %}
+            <div class="card food-card">
+                <h3>{{ item.food_name }}</h3>
+                <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+                <p><strong>Location:</strong> {{ item.location }}</p>
+                <a href="{% url 'claim_food' item.id %}" class="btn-small">Claim</a>
+            </div>
+        {% empty %}
+            <div class="card empty-card">No veg items available.</div>
+        {% endfor %}
+    </div>
+</section>
+
+<section>
+    <div class="section-head"><h2>Non-Veg</h2></div>
+    <div class="list-grid">
+        {% for item in human_nonveg %}
+            <div class="card food-card">
+                <h3>{{ item.food_name }}</h3>
+                <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+                <p><strong>Location:</strong> {{ item.location }}</p>
+                <a href="{% url 'claim_food' item.id %}" class="btn-small">Claim</a>
+            </div>
+        {% empty %}
+            <div class="card empty-card">No non-veg items available.</div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

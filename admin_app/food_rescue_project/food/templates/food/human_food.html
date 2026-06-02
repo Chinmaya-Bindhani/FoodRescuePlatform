@@ -1,0 +1,22 @@
+{% extends 'shared/base.html' %}
+{% block title %}Human Food | Food Rescue{% endblock %}
+{% block content %}
+<section class="page-section">
+    <div class="container">
+        <h1 class="page-title">Human Food</h1>
+        <p class="page-text">Veg and non-veg are shown on separate pages only.</p>
+        <div class="two-col-grid top-gap">
+            <div class="info-card large-card">
+                <h3>Human Veg</h3>
+                <p>Only veg food donations listed here in clean block-level cards.</p>
+                <a href="{% url 'human_veg' %}" class="card-link">Open Veg Page</a>
+            </div>
+            <div class="info-card large-card">
+                <h3>Human Non-Veg</h3>
+                <p>Only non-veg food donations listed here in separate spacious blocks.</p>
+                <a href="{% url 'human_nonveg' %}" class="card-link">Open Non-Veg Page</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'shared/base.html' %}
+{% block title %}Human Non-Veg | Food Rescue{% endblock %}
+{% block content %}
+<section class="page-section">
+    <div class="container">
+        <h1 class="page-title">Human Non-Veg Food</h1>
+        <p class="page-text">Only non-veg items appear on this page.</p>
+        <div class="stack-list top-gap">
+            {% for item in items %}
+            <div class="item-card block-card">
+                <h4>{{ item.title }}</h4>
+                <p>{{ item.description }}</p>
+                <div class="item-meta">Quantity: {{ item.quantity }}</div>
+                <div class="item-meta">Location: {{ item.location }}</div>
+            </div>
+            {% empty %}
+            <div class="empty-box">No non-veg items available.</div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

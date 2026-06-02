@@ -1,0 +1,41 @@
+{% extends 'home_app/base.html' %}
+{% block title %}Admin Page | Food Rescue{% endblock %}
+{% block content %}
+<section class="stats-grid">
+    <div class="card stat-card"><h3>Total Donors</h3><p>{{ donor_count }}</p></div>
+    <div class="card stat-card"><h3>Total Donations</h3><p>{{ donation_count }}</p></div>
+    <div class="card stat-card"><h3>Available Items</h3><p>{{ available_count }}</p></div>
+</section>
+
+<section>
+    <div class="section-head"><h1>All Donations</h1></div>
+    <div class="table-wrap card">
+        <table>
+            <thead>
+                <tr>
+                    <th>Donor</th>
+                    <th>Food For</th>
+                    <th>Type</th>
+                    <th>Food Name</th>
+                    <th>Quantity</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in donations %}
+                <tr>
+                    <td>{{ item.donor.first_name }}</td>
+                    <td>{{ item.get_food_for_display }}</td>
+                    <td>{{ item.get_food_type_display }}</td>
+                    <td>{{ item.food_name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.location }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6">No donations yet.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'shared/base.html' %}
+{% block title %}Dashboard | Food Rescue{% endblock %}
+{% block content %}
+<section class="page-section">
+    <div class="container">
+        <div class="page-head-row">
+            <div>
+                <h1 class="page-title">Dashboard</h1>
+                <p class="page-text">Add donation items and manage your own posts.</p>
+            </div>
+            <a href="{% url 'create_donation' %}" class="btn-dark">Add Item</a>
+        </div>
+        <div class="items-grid top-gap">
+            {% for item in my_items %}
+            <div class="item-card">
+                <span class="pill">{{ item.category|title }}{% if item.category == 'human' %} {{ item.food_type|title }}{% endif %}</span>
+                <h4>{{ item.title }}</h4>
+                <p>{{ item.description }}</p>
+                <div class="item-meta">Quantity: {{ item.quantity }}</div>
+                <div class="item-meta">Location: {{ item.location }}</div>
+            </div>
+            {% empty %}
+            <div class="empty-box">No donation items added yet.</div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
