@@ -3,4 +3,4 @@ mysqlclient==2.2.7
 Pillow==11.3.0
 requests==2.32.5
 gunicorn
-pymysql
+pymysql==1.1.2
