@@ -6,3 +6,4 @@ gunicorn
 pymysql==1.1.2
 dotenv==0.9.9
 whitenoise>=6.0.0
+psycopg2-binary
